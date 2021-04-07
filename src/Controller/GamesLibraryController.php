@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 
+use App\Repository\GamesRepo;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Asset\Package;
 use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
@@ -15,8 +16,8 @@ class GamesLibraryController extends AbstractController
      */
     public function home(): \Symfony\Component\HttpFoundation\Response
     {
-        $games = $this->readJsonData();
-        $randomGames = $this->getRandomGames($games,6);
+        $games = GamesRepo::readJsonData();
+        $randomGames = GamesRepo::getRandomGames($games,6);
 
         return $this->render('gamesLibrary/home.html.twig',[
             "games" => $randomGames,
@@ -28,13 +29,13 @@ class GamesLibraryController extends AbstractController
      */
     public function allGames($page = 1,$order = "asc",$search = null): \Symfony\Component\HttpFoundation\Response
     {
-        $games = $this->readJsonData();
-        $sortedGames = $this->sortGames($games,$order);
+        $games = GamesRepo::readJsonData();
+        $sortedGames = GamesRepo::sortGames($games,$order);
         if(!empty($search)){
-            $sortedGames = $this->searchGames($sortedGames,$search);
+            $sortedGames = GamesRepo::searchGames($sortedGames,$search);
         }
         $totalGamePages = ceil(count($sortedGames) / 10);
-        $filteredGames = $this->getGamesInPage($sortedGames,$page);
+        $filteredGames = GamesRepo::getGamesInPage($sortedGames,$page);
 
         return $this->render('gamesLibrary/games.html.twig',[
             "games" => $filteredGames,
@@ -44,74 +45,4 @@ class GamesLibraryController extends AbstractController
             "currentSearch" => $search
         ]);
     }
-
-    private function getRandomGames($games,$count): array{
-        $randomGames = array();
-
-        for($i = 0; $i < $count; $i++){
-            array_push($randomGames,$games[rand(0,count($games) - 1)]);
-        }
-
-        return $randomGames;
-    }
-
-    private function searchGames($games,$search): array{
-        $filteredGames = array();
-        foreach($games as $game) {
-            if (strpos(strtolower($game["name"]), strtolower($search)) !== false) {
-                array_push($filteredGames,$game);
-            }
-        }
-
-        return $filteredGames;
-    }
-
-    private function sortGames($games, $sortType): array{
-        usort($games, function ($a, $b) {
-            return strnatcmp($a["name"], $b["name"]);
-        });
-
-        if($sortType == "desc")
-            $games = array_reverse($games,false);
-
-        return $games;
-    }
-
-
-    private function getGamesInPage($games, $pageNumber): array{
-        $filteredGames = array();
-        $startPos = ($pageNumber - 1) * 10;
-
-        for($i = 0; $i < 10; $i++){
-            if(empty($games[$startPos + $i]))
-                break;
-
-            $entry = $games[$startPos + $i];
-            array_push($filteredGames,$entry);
-        }
-
-        return $filteredGames;
-    }
-
-    private function readJsonData(): array{
-        $package = new Package(new EmptyVersionStrategy());
-        $path = $package->getUrl('data.json');
-        $data = file_get_contents($path);
-        $jsonData = json_decode($data,1);
-        $filteredData = array();
-
-        foreach($jsonData as $entry){
-            $filteredEntry = [
-                "id" => $entry["id"],
-                "name" => $entry["name"],
-                "icon" => $entry["icon_2"]
-            ];
-
-            !empty($entry["background"])? $filteredEntry["background"] = $entry["background"]: $filteredEntry["background"] = $package->getUrl('/assets/images/inner-hero.jpg');
-
-            array_push($filteredData,$filteredEntry);
-        }
-        return $filteredData;
-    }
-
 }
