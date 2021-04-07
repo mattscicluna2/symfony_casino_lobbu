@@ -3,10 +3,99 @@
 {% block title %}Games Lobby {% endblock %}
 
 {% block body %}
-    <h1>Home</h1>
+
+
+
+
+    <section class="pt-120 pb-120">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="section-header text-center has--bg">
+                        <div class="header-image"><img src="{{ asset("assets/images/splash.png") }}" alt="image"></div>
+                        <h2 class="section-title">Our Games</h2>
+                        <p>We create games for a variety of gaming platforms and consoles, including PC, Mac, Switch, Playstation 4, Xbox One and the upcoming new consoles.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="games-search-wrapper">
+                        <div class="left">
+                            <form class="games-filter-from">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-2 mb-lg-0 mb-2"><span>SORT BY:</span></div>
+                                    <div class="col-lg-5 col-md-6 mb-md-0 mb-3">
+                                        <select class="nice-select" style="display: none;">
+                                            <option>All Platform</option>
+                                            <option>Platform</option>
+                                            <option>Platform</option>
+                                            <option>Platform</option>
+                                            <option>Platform</option>
+                                        </select><div class="nice-select" tabindex="0"><span class="current">All Platform</span><ul class="list"><li data-value="All Platform" class="option selected">All Platform</li><li data-value="Platform" class="option">Platform</li><li data-value="Platform" class="option">Platform</li><li data-value="Platform" class="option">Platform</li><li data-value="Platform" class="option">Platform</li></ul></div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-6">
+                                        <select class="nice-select" style="display: none;">
+                                            <option>All Platform</option>
+                                            <option>Platform</option>
+                                            <option>Platform</option>
+                                            <option>Platform</option>
+                                            <option>Platform</option>
+                                        </select><div class="nice-select" tabindex="0"><span class="current">All Platform</span><ul class="list"><li data-value="All Platform" class="option selected">All Platform</li><li data-value="Platform" class="option">Platform</li><li data-value="Platform" class="option">Platform</li><li data-value="Platform" class="option">Platform</li><li data-value="Platform" class="option">Platform</li></ul></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="right">
+                            <form class="games-search-from">
+                                <input type="search" name="games-search-text" placeholder="Search" class="form-control style--two">
+                                <button type="submit"><i class="las la-search"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-50 mb-none-40">
+                <div class="col-lg-6 mb-40">
+                    <div class="game-card">
+                        <div class="game-card__thumb">
+                            <img src="" alt="image">
+                        </div>
+                        <div class="game-card__content">
+                            <div class="game-card__details">
+                                <div class="game-card__info">
+                                    <div class="thumb"><img src="" alt="image"></div>
+                                    <div class="content">
+                                        <h3 class="game-card__title"><a href="game-details.html">Loard Clan</a></h3>
+                                        <p>Fusce nec sapien sit amet urna. <a href="game-details.html">Read More</a></p>
+                                    </div>
+                                </div>
+                                <div class="game-card__ratings">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span>(4.5)</span>
+                                </div>
+                            </div>
+                            <div class="game-card__action">
+                                <p class="mb-2">Download now at</p>
+                                <img src="" alt="image">
+                                <img src="" alt="image">
+                            </div>
+                        </div><!-- game-card__content end -->
+                    </div><!-- game-card end -->
+                </div>
+            </div>
+        </div>
+    </section>
+
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
+
+    <script src="{{ asset("js/app.js") }}"></script>
 
 {% endblock %}
