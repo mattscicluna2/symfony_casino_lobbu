@@ -13,6 +13,16 @@
 
         $('.nice-select').niceSelect();
 
+        $(".games-order-filter").change(function(){
+            window.location.href = "/1/" + $(this).val() + "/" + $(".games-search-text").val();
+        });
+
+        $(".games-search-text").on('keypress', function (e) {
+            if(e.which === 13){
+                window.location.href = "/1/"+ $(".games-order-filter").val() + "/" + $(this).val();
+            }
+        });
+
         $(".hero").on('mousemove',function(e) {
             parallaxIt(e, ".el-1", -45);
             parallaxIt(e, ".el-2", -25);
@@ -57,7 +67,6 @@
                 y: (relY - $this.height() / 2) / $this.height() * movement
             });
         }
-
     });
 
     $(window).on("scroll", function() {

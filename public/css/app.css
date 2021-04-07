@@ -2343,9 +2343,9 @@ span.is-active:after {
 .games-filter-from .nice-select .list li.selected, .games-filter-from .nice-select .list li:hover {
     background-color: #211258; }
 
-.games-search-from {
+.games-search-form {
     position: relative; }
-.games-search-from button {
+.games-search-form button {
     position: absolute;
     top: 5px;
     right: 10px;

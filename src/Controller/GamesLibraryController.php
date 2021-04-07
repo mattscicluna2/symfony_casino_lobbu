@@ -10,20 +10,49 @@ use Symfony\Component\Routing\Annotation\Route;
 class GamesLibraryController extends AbstractController
 {
     /**
-     * @Route("/{page}",name="app_home");
+     * @Route("/{page}/{order}/{search}",name="app_home");
      */
-    public function home($page = 1,$order = "asc"): \Symfony\Component\HttpFoundation\Response
+    public function home($page = 1,$order = "asc",$search = null): \Symfony\Component\HttpFoundation\Response
     {
         $games = $this->readJsonData();
-        $totalGamePages = ceil(count($games) / 10);
-
-        $filteredGames = $this->getGamesInPage($games,$page);
+        $sortedGames = $this->sortGames($games,$order);
+        if(!empty($search)){
+            $sortedGames = $this->searchGames($sortedGames,$search);
+        }
+        $totalGamePages = ceil(count($sortedGames) / 10);
+        $filteredGames = $this->getGamesInPage($sortedGames,$page);
 
         return $this->render('gamesLibrary/home.html.twig',[
             "games" => $filteredGames,
             "totalGamePages" => $totalGamePages,
+            "currentPage" => $page,
+            "currentOrderFilter" => $order,
+            "currentSearch" => $search
         ]);
     }
+
+    private function searchGames($games,$search): array{
+        $filteredGames = array();
+        foreach($games as $game) {
+            if (strpos(strtolower($game["name"]), strtolower($search)) !== false) {
+                array_push($filteredGames,$game);
+            }
+        }
+
+        return $filteredGames;
+    }
+
+    private function sortGames($games, $sortType): array{
+        usort($games, function ($a, $b) {
+            return strnatcmp($a["name"], $b["name"]);
+        });
+
+        if($sortType == "desc")
+            $games = array_reverse($games,false);
+
+        return $games;
+    }
+
 
     private function getGamesInPage($games, $pageNumber): array{
         $filteredGames = array();
@@ -54,7 +83,7 @@ class GamesLibraryController extends AbstractController
                 "icon" => $entry["icon_2"]
             ];
 
-            !empty($entry["background"])? $filteredEntry["background"] = $entry["background"]: $filteredEntry["background"] = $package->getUrl('assets/images/inner-hero.jpg');
+            !empty($entry["background"])? $filteredEntry["background"] = $entry["background"]: $filteredEntry["background"] = $package->getUrl('/assets/images/inner-hero.jpg');
 
             array_push($filteredData,$filteredEntry);
         }
