@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block pageTitle %}Game Details{% endblock %}
+{% block body %}
+    <section class="pt-120 pb-120">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="section-header text-center has--bg">
+                        <div class="header-image"><img src="{{ asset("assets/images/splash.png") }}" alt="image"></div>
+                        <h2 class="section-title">{{ game["name"] }}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-50 mb-none-40">
+                <div class="col-lg-12 mb-40">
+                    <div class="game-card">
+                        <div class="game-card__thumb">
+                            <img src="{{ game["background"] }}" onError="this.onerror=null;this.src='{{ asset("/assets/images/no-image.png") }}';" alt="image">
+                        </div>
+                        <div class="game-card__content">
+                            <div class="game-card__details">
+                                <div class="game-card__info">
+                                    <div class="thumb"><img src="{{ game["icon"] }}" onError="this.onerror=null;this.src='{{ asset("/assets/images/el-1.png") }}';" alt="image"></div>
+                                    <div class="content">
+                                        <h3 class="game-card__title"><a href="{{ path('app_game_details',{id: game["id"]}) }}">{{ game["name"] }}</a></h3>
+                                        <p>Game Description....</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset("js/app.js") }}"></script>
+
+{% endblock %}

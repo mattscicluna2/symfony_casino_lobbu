@@ -1,7 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Games Lobby {% endblock %}
-
 {% block pageTitle %}Home{% endblock %}
 {% block body %}
     <section class="pt-120 pb-120">
@@ -19,15 +17,15 @@
                     <div class="col-lg-6 mb-40">
                         <div class="game-card">
                             <div class="game-card__thumb">
-                                <img src="{{ game["background"] }}" onError="this.onerror=null;this.src='{{ asset("/assets/images/inner-hero.jpg") }}';" alt="image">
+                                <img src="{{ game["background"] }}" onError="this.onerror=null;this.src='{{ asset("/assets/images/no-image.png") }}';" alt="image">
                             </div>
                             <div class="game-card__content">
                                 <div class="game-card__details">
                                     <div class="game-card__info">
                                         <div class="thumb"><img src="{{ game["icon"] }}" onError="this.onerror=null;this.src='{{ asset("/assets/images/el-1.png") }}';" alt="image"></div>
                                         <div class="content">
-                                            <h3 class="game-card__title"><a href="game-details.html">{{ game["name"] }}</a></h3>
-                                            <p>Game Description.... <a href="game-details.html">Read More</a></p>
+                                            <h3 class="game-card__title"><a href="{{ path('app_game_details',{id: game["id"]}) }}">{{ game["name"] }}</a></h3>
+                                            <p>Game Description.... <a href="{{ path('app_game_details',{id: game["id"]}) }}">Read More</a></p>
                                         </div>
                                     </div>
                                 </div>

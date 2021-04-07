@@ -13,10 +13,12 @@
 
         $('.nice-select').niceSelect();
 
+        //On order filter change go to page
         $(".games-order-filter").change(function(){
             window.location.href = "/games/1/" + $(this).val() + "/" + $(".games-search-text").val();
         });
 
+        //On search filter change go to page
         $(".games-search-text").on('keypress', function (e) {
             if(e.which === 13){
                 window.location.href = "/games/1/"+ $(".games-order-filter").val() + "/" + $(this).val();
@@ -84,5 +86,3 @@
     });
 
 })(jQuery);
-
-//custom script end for game trailer slider
