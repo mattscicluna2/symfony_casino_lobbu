@@ -2,6 +2,7 @@
 
 {% block title %}Games Lobby {% endblock %}
 
+{% block pageTitle %}Home{% endblock %}
 {% block body %}
     <section class="pt-120 pb-120">
         <div class="container">
@@ -9,30 +10,7 @@
                 <div class="col-lg-8">
                     <div class="section-header text-center has--bg">
                         <div class="header-image"><img src="{{ asset("assets/images/splash.png") }}" alt="image"></div>
-                        <h2 class="section-title">Our Games</h2>
-                        <p>We create games for a variety of gaming platforms and consoles, including PC, Mac, Switch, Playstation 4, Xbox One and the upcoming new consoles.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="games-search-wrapper">
-                        <div class="left">
-                            <form class="games-filter-from">
-                                <div class="row align-items-center">
-                                    <div class="col-lg-2 mb-lg-0 mb-2"><span>SORT BY:</span></div>
-                                    <div class="col-lg-5 col-md-6 mb-md-0 mb-3">
-                                        <select class="nice-select games-order-filter" style="display: none;">
-                                            <option value="asc">Ascending</option>
-                                            <option value="desc" {% if currentOrderFilter == "desc" %}selected{% endif %}>Descending</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="right">
-                            <input type="search" value="{{ currentSearch }}" placeholder="Search" class="form-control style--two games-search-text">
-                        </div>
+                        <h2 class="section-title">Top Rated Games</h2>
                     </div>
                 </div>
             </div>
@@ -58,17 +36,6 @@
                     </div>
                 {% endfor %}
             </div>
-            {% if totalGamePages > 1 %}
-                <div class="row mt-50 mb-none-40">
-                    <nav>
-                        <ul class="pagination">
-                            {% for i in 1..totalGamePages %}
-                                <li class="page-item {% if currentPage == i %}active{% endif %}"><a class="page-link" href="{{ path("app_home",{ page:i, order: currentOrderFilter, search: currentSearch}) }}">{{ i }}</a></li>
-                            {% endfor %}
-                        </ul>
-                    </nav>
-                </div>
-            {% endif %}
         </div>
     </section>
 

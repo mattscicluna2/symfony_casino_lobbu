@@ -9,10 +9,24 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class GamesLibraryController extends AbstractController
 {
+
     /**
-     * @Route("/{page}/{order}/{search}",name="app_home");
+     * @Route("/",name="app_home");
      */
-    public function home($page = 1,$order = "asc",$search = null): \Symfony\Component\HttpFoundation\Response
+    public function home(): \Symfony\Component\HttpFoundation\Response
+    {
+        $games = $this->readJsonData();
+        $randomGames = $this->getRandomGames($games,6);
+
+        return $this->render('gamesLibrary/home.html.twig',[
+            "games" => $randomGames,
+        ]);
+    }
+
+    /**
+     * @Route("/games/{page}/{order}/{search}",name="app_games");
+     */
+    public function allGames($page = 1,$order = "asc",$search = null): \Symfony\Component\HttpFoundation\Response
     {
         $games = $this->readJsonData();
         $sortedGames = $this->sortGames($games,$order);
@@ -22,13 +36,23 @@ class GamesLibraryController extends AbstractController
         $totalGamePages = ceil(count($sortedGames) / 10);
         $filteredGames = $this->getGamesInPage($sortedGames,$page);
 
-        return $this->render('gamesLibrary/home.html.twig',[
+        return $this->render('gamesLibrary/games.html.twig',[
             "games" => $filteredGames,
             "totalGamePages" => $totalGamePages,
             "currentPage" => $page,
             "currentOrderFilter" => $order,
             "currentSearch" => $search
         ]);
+    }
+
+    private function getRandomGames($games,$count): array{
+        $randomGames = array();
+
+        for($i = 0; $i < $count; $i++){
+            array_push($randomGames,$games[rand(0,count($games) - 1)]);
+        }
+
+        return $randomGames;
     }
 
     private function searchGames($games,$search): array{

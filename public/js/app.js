@@ -14,12 +14,12 @@
         $('.nice-select').niceSelect();
 
         $(".games-order-filter").change(function(){
-            window.location.href = "/1/" + $(this).val() + "/" + $(".games-search-text").val();
+            window.location.href = "/games/1/" + $(this).val() + "/" + $(".games-search-text").val();
         });
 
         $(".games-search-text").on('keypress', function (e) {
             if(e.which === 13){
-                window.location.href = "/1/"+ $(".games-order-filter").val() + "/" + $(this).val();
+                window.location.href = "/games/1/"+ $(".games-order-filter").val() + "/" + $(this).val();
             }
         });
 
